@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom right, #A683E3  ,#E4E9FD );
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FFFF00;
+        }
+
+        .home-button {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .home-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color:#E4E9FD;
+            color: black;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #E4E9FD;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+
+        button[type="submit"] {
+            display: block;
+
+            width: 45%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        button[type="submit"]:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        <a href="/home">Home</a>
+    </div>
+
+    <h1>Create a Quiz</h1>
+
+    <form id="quizForm">
+        <label for="topic">Topic:</label>
+
+        <select id="difficulty" required>
+            <option value="arrays">chose the topics</option>
+            <option value="linked-lists">Linked Lists</option>
+            <option value="stacks">Stacks</option>
+            <option value="queues">Queues</option>
+            <option value="trees">Trees</option>
+            <option value="binary-search-trees">Binary Search Trees</option>
+            <option value="heaps">Heaps</option>
+            <option value="graphs">Graphs</option>
+            <option value="hash-tables">Hash Tables</option>
+            <option value="sorting-algorithms">Sorting Algorithms</option>
+            <option value="searching-algorithms">Searching Algorithms</option>
+            <option value="dynamic-programming">Dynamic Programming</option>
+            <option value="greedy-algorithms">Greedy Algorithms</option>
+            <option value="backtracking">Backtracking</option>
+            <option value="divide-and-conquer">Divide and Conquer</option>
+            <option value="recursion">Recursion</option>
+            <option value="bit-manipulation">Bit Manipulation</option>
+            <option value="string-algorithms">String Algorithms</option>
+            <option value="matrix-operations">Matrix Operations</option>
+            <option value="matrix-operations">Basic C++</option>
+        </select>
+
+        <label for="numQuestions">Number of Questions:</label>
+        <input type="number" id="numQuestions" required>
+
+        <label for="difficulty">Difficulty Level:</label>
+        <select id="difficulty" required>
+            <option value="">Select difficulty level</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <center><button type="submit">Create Quiz</button></center>
+    </form>
+
+
+</body>
+</html>
