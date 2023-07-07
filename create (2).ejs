@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a Quiz</title>
+    <span id="selectedOptionHeading"></span>
+
+    <style>
+        /* Styles for the page */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom right, #A683E3  ,#E4E9FD );
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #FFFF00;
+        }
+        .home-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color:#E4E9FD;
+            color: black;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #E4E9FD;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+        .search-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .search-container .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .search-container .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .search-container .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .search-container.show .dropdown-content {
+            display: block;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 45%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+        button[type="submit"]:hover {
+            background-color: black;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .selected-topics {
+    margin-top: 10px;
+}
+
+.topic-tag {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.close-icon {
+    cursor: pointer;
+    margin-left: 5px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.topic-tag {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+.dropdown-content a.active {
+    background-color: #ddd;
+}
+
+    </style>
+    <script>
+      var selectedTopics = [];
+
+function toggleDropdown() {
+    var dropdownContent = document.getElementById("dropdownContent");
+    dropdownContent.style.display = "block";
+}
+
+function searchTopics() {
+    var input = document.getElementById("topicInput");
+    var filter = input.value.toUpperCase();
+    var dropdownContent = document.getElementById("dropdownContent");
+    var options = dropdownContent.getElementsByTagName("a");
+
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        var txtValue = option.textContent || option.innerText;
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            option.style.display = "";
+        } else {
+            option.style.display = "none";
+        }
+    }
+}
+function selectTopic(topic) {
+    selectedTopics.push(topic);
+    updateSelectedTopics();
+    document.getElementById("topicInput").value = "";
+    document.getElementById("dropdownContent").style.display = "none";
+    document.getElementById("selectedOptionHeading").textContent = "Selected Option: " + topic;
+}
+
+
+
+function selectTopic(topic) {
+    selectedTopics.push(topic);
+    updateSelectedTopics();
+    document.getElementById("topicInput").value = "";
+    document.getElementById("dropdownContent").style.display = "none";
+}
+
+function removeTopic(topic) {
+    var index = selectedTopics.indexOf(topic);
+    if (index > -1) {
+        selectedTopics.splice(index, 1);
+    }
+    updateSelectedTopics();
+}
+
+function updateSelectedTopics() {
+    var selectedTopicsElement = document.getElementById("selectedTopics");
+    selectedTopicsElement.innerHTML = "";
+
+    for (var i = 0; i < selectedTopics.length; i++) {
+        var topic = selectedTopics[i];
+        var tag = document.createElement("span");
+        tag.className = "topic-tag";
+        tag.textContent = topic;
+        
+        var closeIcon = document.createElement("span");
+        closeIcon.className = "close-icon";
+        closeIcon.textContent = "x";
+        closeIcon.setAttribute("data-topic", topic);
+        closeIcon.addEventListener("click", function(event) {
+            var topic = event.target.getAttribute("data-topic");
+            removeTopic(topic);
+        });
+
+        tag.appendChild(closeIcon);
+        selectedTopicsElement.appendChild(tag);
+    }
+}
+
+document.addEventListener("click", function(event) {
+    var dropdownContent = document.getElementById("dropdownContent");
+    var topicInput = document.getElementById("topicInput");
+
+    // Check if the clicked element is inside the dropdown or the topic input
+    if (!dropdownContent.contains(event.target) && event.target !== topicInput) {
+        hideDropdown();
+    }
+});
+
+function hideDropdown() {
+    var dropdownContent = document.getElementById("dropdownContent");
+    dropdownContent.style.display = "none";
+}
+
+function validateForm() {
+    var numQuestions = document.getElementById("numQuestions").value;
+
+    if (numQuestions <= 0) {
+        document.getElementById("numQuestionsError").style.display = "block";
+        return false;
+    }
+
+    return true;
+}
+function selectTopic(topic) {
+    selectedTopics.push(topic);
+    updateSelectedTopics();
+    document.getElementById("topicInput").value = "";
+    document.getElementById("dropdownContent").style.display = "none";
+}
+ 
+function toggleDropdown() {
+    var dropdownContent = document.getElementById("dropdownContent");
+    dropdownContent.style.display = "block";
+    resetDropdown();
+}
+var currentOptionIndex = -1;
+
+function navigateDropdown(event) {
+    var dropdownContent = document.getElementById("dropdownContent");
+    var options = dropdownContent.getElementsByTagName("a");
+
+    switch (event.key) {
+        case "ArrowUp":
+            event.preventDefault();
+            currentOptionIndex = Math.max(currentOptionIndex - 1, 0);
+            break;
+        case "ArrowDown":
+            event.preventDefault();
+            currentOptionIndex = Math.min(currentOptionIndex + 1, options.length - 1);
+            break;
+        case "Enter":
+            if (currentOptionIndex !== -1) {
+                event.preventDefault();
+                var selectedOption = options[currentOptionIndex];
+                selectTopic(selectedOption.textContent.trim());
+                currentOptionIndex = -1;
+            }
+            break;
+        default:
+            break;
+    }
+
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        if (i === currentOptionIndex) {
+            option.classList.add("active");
+        } else {
+            option.classList.remove("active");
+        }
+    }
+}
+
+document.addEventListener("keydown", navigateDropdown);
+
+
+function resetDropdown() {
+    var options = document.querySelectorAll("#dropdownContent a");
+    for (var i = 0; i < options.length; i++) {
+        options[i].style.display = "block";
+    }
+}
+function searchTopics() {
+    var input = document.getElementById("topicInput");
+    var filter = input.value.toUpperCase();
+    var dropdownContent = document.getElementById("dropdownContent");
+    var options = dropdownContent.getElementsByTagName("a");
+    var resultsFound = false;
+
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        var txtValue = option.textContent || option.innerText;
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            option.style.display = "block";
+            resultsFound = true;
+        } else {
+            option.style.display = "none";
+        }
+    }
+
+    if (!resultsFound) {
+        dropdownContent.style.display = "none";
+    }
+}
+function selectTopic(topic) {
+    selectedTopics.push(topic);
+    updateSelectedTopics();
+    document.getElementById("topicInput").value = "";
+    document.getElementById("dropdownContent").style.display = "none";
+}
+
+function updateSelectedTopics() {
+    var selectedTopicsElement = document.getElementById("selectedTopics");
+    selectedTopicsElement.innerHTML = "";
+
+    for (var i = 0; i < selectedTopics.length; i++) {
+        var topic = selectedTopics[i];
+        var tag = document.createElement("span");
+        tag.className = "topic-tag";
+        tag.textContent = topic;
+
+        selectedTopicsElement.appendChild(tag);
+    }
+}
+var selectedTopics = [];
+
+function selectTopic(topic) {
+    selectedTopics.push(topic);
+    updateSelectedTopics();
+    document.getElementById("topicInput").value = "";
+    document.getElementById("dropdownContent").style.display = "none";
+}
+
+function updateSelectedTopics() {
+    var selectedTopicsElement = document.getElementById("selectedTopics");
+    selectedTopicsElement.innerHTML = "";
+
+    for (var i = 0; i < selectedTopics.length; i++) {
+        var topic = selectedTopics[i];
+        var tag = document.createElement("span");
+        tag.className = "topic-tag";
+        tag.textContent = topic;
+
+        selectedTopicsElement.appendChild(tag);
+    }
+}
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+    <div class="home-button">
+        <a href="/home">Home</a>
+    </div>
+
+    <h1>Create a Quiz</h1>
+    <form id="quizForm" method="post" action="/create-quiz" onsubmit="return validateForm();">
+        <label for="topic">Topic:</label>
+        <div class="search-container">
+            <input type="text" id="topicInput" placeholder="Choose a topic" onkeyup="searchTopics();" onclick="toggleDropdown();">
+            <div id="dropdownContent" class="dropdown-content">
+                <a href="javascript:void(0)" onclick="selectTopic('Linked Lists')">Linked Lists</a>
+                <a href="javascript:void(0)" onclick="selectTopic('Stacks')">Stacks</a>
+                <a href="javascript:void(0)" onclick="selectTopic('Queues')">Queues</a>
+                <a href="javascript:void(0)" onclick="selectTopic('Priority Queues')">Priority Queues</a>
+                <!-- Add more options here -->
+            </div>
+        </div>
+        
+        <div id="selectedTopics"></div>
+        
+
+        <label for="numQuestions">Number of Questions:</label>
+        <input type="number" id="numQuestions" required>
+        <div id="numQuestionsError" class="error-message" style="display: none;">Please enter a positive number.</div>
+
+        <label for="difficulty">Difficulty Level:</label>
+        <select id="difficulty" required>
+            <option value="">Select difficulty level</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <center><button type="submit">Create Quiz</button></center>
+    </form>
+</body>
+</html>
