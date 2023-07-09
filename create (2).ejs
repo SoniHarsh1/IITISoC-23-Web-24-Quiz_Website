@@ -5,7 +5,7 @@
     <span id="selectedOptionHeading"></span>
 
     <style>
-        /* Styles for the page */
+        
         body {
             font-family: Arial, sans-serif;
             background-image: linear-gradient(to bottom right, #A683E3  ,#E4E9FD );
@@ -155,11 +155,44 @@
 
     </style>
     <script>
-      var selectedTopics = [];
+window.addEventListener("click", function(event) {
+        var dropdownContent = document.getElementById("dropdownContent");
+        var topicInput = document.getElementById("topicInput");
 
+        // Check if the clicked element is inside the dropdown or the topic input
+        if (!dropdownContent.contains(event.target) && event.target !== topicInput) {
+            hideDropdown();
+        }
+    });
+
+    function hideDropdown() {
+        var dropdownContent = document.getElementById("dropdownContent");
+        dropdownContent.style.display = "none";
+    }
+
+ 
+
+       var selectedTopics = [];
+       function validateForm() {
+        var numQuestions = parseInt(document.getElementById("numQuestions").value);
+
+        if (numQuestions <= 0) {
+            document.getElementById("numQuestionsError").style.display = "block";
+            return false;
+        }
+
+        return true;
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+        if (!validateForm()) {
+            event.preventDefault();
+        }
+    });
 function toggleDropdown() {
     var dropdownContent = document.getElementById("dropdownContent");
     dropdownContent.style.display = "block";
+    resetDropdown();
 }
 
 function searchTopics() {
@@ -167,27 +200,24 @@ function searchTopics() {
     var filter = input.value.toUpperCase();
     var dropdownContent = document.getElementById("dropdownContent");
     var options = dropdownContent.getElementsByTagName("a");
+    var resultsFound = false;
 
     for (var i = 0; i < options.length; i++) {
         var option = options[i];
         var txtValue = option.textContent || option.innerText;
 
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            option.style.display = "";
+            option.style.display = "block";
+            resultsFound = true;
         } else {
             option.style.display = "none";
         }
     }
-}
-function selectTopic(topic) {
-    selectedTopics.push(topic);
-    updateSelectedTopics();
-    document.getElementById("topicInput").value = "";
-    document.getElementById("dropdownContent").style.display = "none";
-    document.getElementById("selectedOptionHeading").textContent = "Selected Option: " + topic;
-}
 
-
+    if (!resultsFound) {
+        dropdownContent.style.display = "none";
+    }
+}
 
 function selectTopic(topic) {
     selectedTopics.push(topic);
@@ -213,12 +243,12 @@ function updateSelectedTopics() {
         var tag = document.createElement("span");
         tag.className = "topic-tag";
         tag.textContent = topic;
-        
+
         var closeIcon = document.createElement("span");
         closeIcon.className = "close-icon";
         closeIcon.textContent = "x";
         closeIcon.setAttribute("data-topic", topic);
-        closeIcon.addEventListener("click", function(event) {
+        closeIcon.addEventListener("click", function (event) {
             var topic = event.target.getAttribute("data-topic");
             removeTopic(topic);
         });
@@ -228,155 +258,12 @@ function updateSelectedTopics() {
     }
 }
 
-document.addEventListener("click", function(event) {
-    var dropdownContent = document.getElementById("dropdownContent");
-    var topicInput = document.getElementById("topicInput");
-
-    // Check if the clicked element is inside the dropdown or the topic input
-    if (!dropdownContent.contains(event.target) && event.target !== topicInput) {
-        hideDropdown();
-    }
-});
-
-function hideDropdown() {
-    var dropdownContent = document.getElementById("dropdownContent");
-    dropdownContent.style.display = "none";
-}
-
-function validateForm() {
-    var numQuestions = document.getElementById("numQuestions").value;
-
-    if (numQuestions <= 0) {
-        document.getElementById("numQuestionsError").style.display = "block";
-        return false;
-    }
-
-    return true;
-}
-function selectTopic(topic) {
-    selectedTopics.push(topic);
-    updateSelectedTopics();
-    document.getElementById("topicInput").value = "";
-    document.getElementById("dropdownContent").style.display = "none";
-}
- 
-function toggleDropdown() {
-    var dropdownContent = document.getElementById("dropdownContent");
-    dropdownContent.style.display = "block";
-    resetDropdown();
-}
-var currentOptionIndex = -1;
-
-function navigateDropdown(event) {
-    var dropdownContent = document.getElementById("dropdownContent");
-    var options = dropdownContent.getElementsByTagName("a");
-
-    switch (event.key) {
-        case "ArrowUp":
-            event.preventDefault();
-            currentOptionIndex = Math.max(currentOptionIndex - 1, 0);
-            break;
-        case "ArrowDown":
-            event.preventDefault();
-            currentOptionIndex = Math.min(currentOptionIndex + 1, options.length - 1);
-            break;
-        case "Enter":
-            if (currentOptionIndex !== -1) {
-                event.preventDefault();
-                var selectedOption = options[currentOptionIndex];
-                selectTopic(selectedOption.textContent.trim());
-                currentOptionIndex = -1;
-            }
-            break;
-        default:
-            break;
-    }
-
-    for (var i = 0; i < options.length; i++) {
-        var option = options[i];
-        if (i === currentOptionIndex) {
-            option.classList.add("active");
-        } else {
-            option.classList.remove("active");
-        }
-    }
-}
-
-document.addEventListener("keydown", navigateDropdown);
-
-
 function resetDropdown() {
     var options = document.querySelectorAll("#dropdownContent a");
     for (var i = 0; i < options.length; i++) {
         options[i].style.display = "block";
     }
 }
-function searchTopics() {
-    var input = document.getElementById("topicInput");
-    var filter = input.value.toUpperCase();
-    var dropdownContent = document.getElementById("dropdownContent");
-    var options = dropdownContent.getElementsByTagName("a");
-    var resultsFound = false;
-
-    for (var i = 0; i < options.length; i++) {
-        var option = options[i];
-        var txtValue = option.textContent || option.innerText;
-
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            option.style.display = "block";
-            resultsFound = true;
-        } else {
-            option.style.display = "none";
-        }
-    }
-
-    if (!resultsFound) {
-        dropdownContent.style.display = "none";
-    }
-}
-function selectTopic(topic) {
-    selectedTopics.push(topic);
-    updateSelectedTopics();
-    document.getElementById("topicInput").value = "";
-    document.getElementById("dropdownContent").style.display = "none";
-}
-
-function updateSelectedTopics() {
-    var selectedTopicsElement = document.getElementById("selectedTopics");
-    selectedTopicsElement.innerHTML = "";
-
-    for (var i = 0; i < selectedTopics.length; i++) {
-        var topic = selectedTopics[i];
-        var tag = document.createElement("span");
-        tag.className = "topic-tag";
-        tag.textContent = topic;
-
-        selectedTopicsElement.appendChild(tag);
-    }
-}
-var selectedTopics = [];
-
-function selectTopic(topic) {
-    selectedTopics.push(topic);
-    updateSelectedTopics();
-    document.getElementById("topicInput").value = "";
-    document.getElementById("dropdownContent").style.display = "none";
-}
-
-function updateSelectedTopics() {
-    var selectedTopicsElement = document.getElementById("selectedTopics");
-    selectedTopicsElement.innerHTML = "";
-
-    for (var i = 0; i < selectedTopics.length; i++) {
-        var topic = selectedTopics[i];
-        var tag = document.createElement("span");
-        tag.className = "topic-tag";
-        tag.textContent = topic;
-
-        selectedTopicsElement.appendChild(tag);
-    }
-}
-
 
 
 
@@ -395,11 +282,11 @@ function updateSelectedTopics() {
         <div class="search-container">
             <input type="text" id="topicInput" placeholder="Choose a topic" onkeyup="searchTopics();" onclick="toggleDropdown();">
             <div id="dropdownContent" class="dropdown-content">
-                <a href="javascript:void(0)" onclick="selectTopic('Linked Lists')">Linked Lists</a>
-                <a href="javascript:void(0)" onclick="selectTopic('Stacks')">Stacks</a>
-                <a href="javascript:void(0)" onclick="selectTopic('Queues')">Queues</a>
-                <a href="javascript:void(0)" onclick="selectTopic('Priority Queues')">Priority Queues</a>
-                <!-- Add more options here -->
+                <a href="javascript:void(0)" onclick="selectTopic('HTML')">HTML</a>
+                <a href="javascript:void(0)" onclick="selectTopic('CSS')">CSS</a>
+                <a href="javascript:void(0)" onclick="selectTopic('Javascript')">Javascript</a>
+                <a href="javascript:void(0)" onclick="selectTopic('Any other topic')">Any other topic</a>
+                <a href="javascript:void(0)" onclick="selectTopic('node.js')">node.js</a>
             </div>
         </div>
         
