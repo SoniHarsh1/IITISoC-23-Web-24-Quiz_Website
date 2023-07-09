@@ -3,92 +3,72 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const { EventEmitter } = require('events');
 const dialog = require("dialog-node");
+const mongoose=require('mongoose');
 const app = express();
 const myEmitter = new EventEmitter();
-
+mongoose.connect("mongodb://127.0.0.1:27017/questionsdb",{useNewUrlParser: true});
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const quesschema=new mongoose.Schema({
+  Topic:String,
+  question:String,
+  opt1:String,
+  opt1:String,
+  opt2:String,
+  opt3:String,
+  opt4:String,
+  answer:String
+});
+const question=mongoose.model("question",quesschema);
+const ques= new question({
+  Topic:"stack",
+  question:"what is stack?",
+  opt1:"A. abc",
+  opt2:"B. qddxf",
+  opt3:"C. abc",
+  opt4:"D. asfc",
+  answer:"C .abc"
+})
+const ques2=new question({
+  Topic:"queue",
+  question:"what is queue?",
+  opt1:"A. abc",
+  opt2:"B. qddxf",
+  opt3:"C. abc",
+  opt4:"D. asfc",
+  answer:"C .abc"
+})
+const ques3=new question({
+  Topic:"linkedlist",
+  question:"what is linkedlist?",
+  opt1:"A. abc",
+  opt2:"B. qddxf",
+  opt3:"C. abc",
+  opt4:"D. asfc",
+  answer:"C .abc"
+})
+const ques4=new question({
+  Topic:"enqueue",
+  question:"what is enquque?",
+  opt1:"A. abc",
+  opt2:"B. qddxf",
+  opt3:"C. abc",
+  opt4:"D. asfc",
+  answer:"C .abc"
+})
+const ques5=new question({
+  Topic:"dequeue",
+  question:"what is dequque?",
+  opt1:"A. abc",
+  opt2:"B. qddxf",
+  opt3:"C. abc",
+  opt4:"D. asfc",
+  answer:"C .abc"
+})
 
-var questions=[
-    {
-        Topic:"hello",
-        numb:1,
-        question:"how are you?",
-        answer:"C.abc",
-        options:[
-            "A. abc",
-            "B. qddxf",
-            "C. abc",
-            "D. asfc",
-        ]
-    },
-    {
-        numb:1,
-        question:"how are you?",
-        answer:"",
-        options:[
 
-        ]
-    },
-    {
-        numb:1,
-        question:"how are you?",
-        answer:"",
-        options:[
-
-        ]
-    },
-    {
-        numb:1,
-        question:"how are you?",
-        answer:"",
-        options:[
-
-        ]
-    }
-]
-var num=questions.length;
-// const durationInSeconds = 1000; // Duration in seconds
-// let secondsRemaining = durationInSeconds;
-
-// var startTime; // Variable to store the start time
-//     var stopwatchInterval; // Variable to store the interval
-//
-//     function startStopwatch() {
-//       startTime = new Date().getTime(); // Record the start time
-//       stopwatchInterval = setInterval(updateStopwatch, 10); // Update the stopwatch every 10 milliseconds
-//     }
-//
-//     function updateStopwatch() {
-//       var currentTime = new Date().getTime(); // Get the current time
-//       var elapsedTime = currentTime - startTime; // Calculate the elapsed time in milliseconds
-//
-//       // Convert the elapsed time to hours, minutes, seconds, and milliseconds
-//       var hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-//       var minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-//       var seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
-//       var milliseconds = Math.floor((elapsedTime % 1000) / 10);
-//
-//       // Format the time values to always display two digits (e.g., 01, 02, 10)
-//       hours = ("0" + hours).slice(-2);
-//       minutes = ("0" + minutes).slice(-2);
-//       seconds = ("0" + seconds).slice(-2);
-//       milliseconds = ("0" + milliseconds).slice(-2);
-//
-//       // Update the stopwatch display
-//       document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-//     }
-//
-//     function stopStopwatch() {
-//       clearInterval(stopwatchInterval); // Clear the interval to stop the stopwatch
-//     }
-//
-//     function resetStopwatch() {
-//       clearInterval(stopwatchInterval); // Clear the interval
-//       document.getElementById("timer").innerHTML = "00:00:00:00"; // Reset the display
-//     }
 
 
 app.get("/",function(req,res){
@@ -109,114 +89,38 @@ app.get("/faq",function(req,res){
 app.get("/About",function(req,res){
   res.render("About")
 });
-
-// app.post("/list",function(req,res){
-//   // const clickedIndex = req.body.index;
-//   // console.log('Clicked item index:', clickedIndex);
-//   // // Process the clicked index as desired
-//   // // ...
-//   // res.sendStatus(200); // Send a response to the client
-//     const startbtn=req.body.block;
-//     const popup=req.body.popupinfo;
-//     const exitbtn=req.body.exitbtn;
-//     const body=req.body;
-//     myEmitter.emit('onclick');
-//     myEmitter.on("onclick", ()=>{
-//
-//       //popup.
-//       //   body.classList.add("active");
-//       //res.render("qna");
-//     })
-//     // exitbtn.addEventListener("click",()=>{
-//     //     popup.classList.remove('.active');
-//     //     body.classList.remove('.active');
-//     // })
-//     var startTime; // Variable to store the start time
-//     var stopwatchInterval; // Variable to store the interval
-//
-//     function startStopwatch() {
-//       startTime = new Date().getTime(); // Record the start time
-//       stopwatchInterval = setInterval(updateStopwatch, 10); // Update the stopwatch every 10 milliseconds
-//     }
-//
-//     function updateStopwatch() {
-//       var currentTime = new Date().getTime(); // Get the current time
-//       var elapsedTime = currentTime - startTime; // Calculate the elapsed time in milliseconds
-//
-//       // Convert the elapsed time to hours, minutes, seconds, and milliseconds
-//       var hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-//       var minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-//       var seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
-//       var milliseconds = Math.floor((elapsedTime % 1000) / 10);
-//
-//       // Format the time values to always display two digits (e.g., 01, 02, 10)
-//       hours = ("0" + hours).slice(-2);
-//       minutes = ("0" + minutes).slice(-2);
-//       seconds = ("0" + seconds).slice(-2);
-//       milliseconds = ("0" + milliseconds).slice(-2);
-//
-//       // Update the stopwatch display
-//       req.body.timer=hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-//     }
-//
-//     function stopStopwatch() {
-//       clearInterval(stopwatchInterval); // Clear the interval to stop the stopwatch
-//     }
-//
-//     function resetStopwatch() {
-//       clearInterval(stopwatchInterval); // Clear the interval
-//       req.body.timer = "00:00:00:00"; // Reset the display
-//     }
-//
-//     function timer(){
-//       startStopwatch();
-//       updateStopwatch();
-//       stopStopwatch();
-//       resetStopwatch();
-//     }
-//     res.render("qna",{ques:questions[0].question,
-//                      topic:questions[0].Topic,
-//                      opt1:questions[0].options[0],
-//                      opt2:questions[0].options[1],
-//                      opt3:questions[0].options[2],
-//                      opt4:questions[0].options[3],
-//                      //timer: timer()
-//                      });
-//     function showques(i){
-//       res.render("qna",{ques:questions[i].question,
-//                        topic:questions[i].Topic,
-//                        opt1:questions[i].options[0],
-//                        opt2:questions[i].options[1],
-//                        opt3:questions[i].options[2],
-//                        opt4:questions[i].options[3],
-//                        //timer: timer()
-//                        });
-//     }
-//     const nextbtn=req.body.b;
-//     for(var i=1;i<num;i++){
-//         nextbtn.on("onclick", ()=>{
-//         showques(i);
-//       });
-//     }
-//     // timer=req.body.timer;
-//     // timer
-//     });
-// var quescount=0;
-// app.post("/qna",function(req,res){
-//     const questext=req.body.mcq;
-//     questext.
-// })
-app.post("/qna",function(req,res){
-  res.render("qna",{ques:questions[0].question,
-                    topic:questions[0].Topic,
-                    opt1:questions[0].options[0],
-                    opt2:questions[0].options[1],
-                    opt3:questions[0].options[2],
-                    opt4:questions[0].options[3],
-                    //timer: timer()
-                    });
+app.get("/loginpage",function(req,res){
+  res.render("loginpage")
 });
-
+app.post("/profile",function(req,res){
+  res.render("profile")
+});
+app.post("/qna",function(req,res){
+  question.find().then(function(questions){
+    if(questions){
+      console.log(questions[0].Topic);
+      res.render("qna",{topic:questions[0].Topic,
+                        ques:questions[0].question,
+                        opt1:questions[0].opt1,
+                        opt2:questions[0].opt2,
+                        opt3:questions[0].opt3,
+                        opt4:questions[0].opt4,
+                        //timer: timer()
+                        })
+      // res.render("qna",{topic:questions.question[0].Topic,
+      //                   ques:questions.question[0].question,
+      //                   opt1:questions.question[0].opt1,
+      //                   opt2:questions.question[0].opt2,
+      //                   opt3:questions.question[0].opt3,
+      //                   opt4:questions.question[0].opt4,
+      //                   //timer: timer()
+      //                   })
+    }
+  })
+});
+app.post("/create-quiz",function(req,res){
+  res.render("create-quiz")
+});
 app.post("/last",function(req,res){
   res.redirect("/")
 });
