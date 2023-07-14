@@ -7,70 +7,43 @@ const mongoose=require('mongoose');
 const app = express();
 const myEmitter = new EventEmitter();
 mongoose.connect("mongodb://127.0.0.1:27017/questionsdb",{useNewUrlParser: true});
+const question = require("./question.js");
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-const quesschema=new mongoose.Schema({
-  Topic:String,
-  question:String,
-  opt1:String,
-  opt1:String,
-  opt2:String,
-  opt3:String,
-  opt4:String,
-  answer:String
-});
-const question=mongoose.model("question",quesschema);
-const ques= new question({
-  Topic:"stack",
-  question:"what is stack?",
-  opt1:"A. abc",
-  opt2:"B. qddxf",
-  opt3:"C. abc",
-  opt4:"D. asfc",
-  answer:"C .abc"
-})
-const ques2=new question({
-  Topic:"queue",
-  question:"what is queue?",
-  opt1:"A. abc",
-  opt2:"B. qddxf",
-  opt3:"C. abc",
-  opt4:"D. asfc",
-  answer:"C .abc"
-})
-const ques3=new question({
-  Topic:"linkedlist",
-  question:"what is linkedlist?",
-  opt1:"A. abc",
-  opt2:"B. qddxf",
-  opt3:"C. abc",
-  opt4:"D. asfc",
-  answer:"C .abc"
-})
-const ques4=new question({
-  Topic:"enqueue",
-  question:"what is enquque?",
-  opt1:"A. abc",
-  opt2:"B. qddxf",
-  opt3:"C. abc",
-  opt4:"D. asfc",
-  answer:"C .abc"
-})
-const ques5=new question({
-  Topic:"dequeue",
-  question:"what is dequque?",
-  opt1:"A. abc",
-  opt2:"B. qddxf",
-  opt3:"C. abc",
-  opt4:"D. asfc",
-  answer:"C .abc"
-})
 
 
+app.get("/problems",async(req,res)=>{
+  const{Topic}=req.query;
+  if(Topic=='CSS'){
+  const allProduct = await question.find({Topic:'CSS'});
+res.render("qna",{question: allProduct});
 
+}
+if(Topic=='HTML'){
+  const allProduct = await question.find({Topic:'HTML'});
+res.render("qna",{question: allProduct});
 
+}
+if(Topic=='Javascript'){
+  const allProduct = await question.find({Topic:'Javascript'});
+res.render("qna",{question: allProduct});
+
+}
+if(Topic=='Node.js'){
+  const allProduct = await question.find({Topic:'Node.js'});
+res.render("qna",{question: allProduct});
+
+}
+})
+/*app.get("/problems", async(req,res)=>{
+  const{Topic}=req.query;
+  if(Topic=='HTML'){
+    const questions=await question.find({Topic:'HTML'});
+    res.render("qna",{questions,Topic})
+   }});*/
+  
 app.get("/",function(req,res){
   res.render("home")
 });
@@ -96,10 +69,10 @@ app.post("/profile",function(req,res){
   res.render("profile")
 });
 app.post("/qna",function(req,res){
-  question.find().then(function(questions){
+  questions.find().then(function(questions){
     if(questions){
-      console.log(questions[0].Topic);
-      res.render("qna",{topic:questions[0].Topic,
+      console.log(questions[0].topic);
+      res.render("qna",{topic:questions[0].topic,
                         ques:questions[0].question,
                         opt1:questions[0].opt1,
                         opt2:questions[0].opt2,
@@ -124,6 +97,11 @@ app.post("/create-quiz",function(req,res){
 app.post("/last",function(req,res){
   res.redirect("/")
 });
+/*app.post("/create",async(req,res)=>{
+  //var search=req.body.search;
+  const questions=await question.find({name:new RegExp(search, 'i')});
+  res.render('qna.ejs',{questions});
+})*/
 
 
 app.listen(3000,function(){
