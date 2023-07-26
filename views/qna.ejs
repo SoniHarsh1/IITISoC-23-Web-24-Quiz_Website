@@ -215,22 +215,22 @@
       <div class="b1">
         <form>
         <div class="top">
-        <h1><%= question[0].Topic%> </h1>
+        <h1> Quiz </h1>
         </div>
-        <div class="timer" id="timer">00:00:00</div>
+        <!-- <div class="timer" id="timer">00:00:00</div> -->
         <div class="full">
         <div class="question mcq">
-          <h2 class="mcq1"> <%=question[0].question%> </h2>
+          <h2 class="mcq1"> ques </h2>
         </div>
         <div class="mcq opt1 op">
-          <label for="html" class="opt"> <%=question[0].opt1%> </label><br>
-          <label for="html" class="opt"> <%=question[0].opt2%></label><br>
-          <label for="html" class="opt"> <%=question[0].opt3%> </label><br>
-          <label for="html" class="opt"> <%=question[0].opt4%> </label><br>
+          <label for="html" class="opt"> opt1 </label><br>
+          <label for="html" class="opt"> opt2 </label><br>
+          <label for="html" class="opt"> opt3 </label><br>
+          <label for="html" class="opt"> opt4 </label><br>
         </div>
         </div>
             <button id="b" type="button" class="btn btn-primary b">Save and Next</button>
-            <button id="t" type="button" class="btn btn-primary">Skip</button>
+            <!-- <button id="t" type="button" class="btn btn-primary">Skip</button> -->
         <h6 class="count">1 of 4 Questions</h6>
         </form>
 
@@ -262,45 +262,222 @@
           </div>
         <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> -->
         <script>
-          const startbtn=document.querySelector('.block');
-const popupinfo=document.querySelector('.popupinfo');
-const body=document.querySelector('body');
-startbtn.onclick = ()=>{
-      popupinfo.classList.add('active1');
-      body.classList.add('body');
-};
-var questions=[];
-var problems="<%=question%>";
-for(let problem of problems){
-  var topic="<%=problem.Topic%>";
-
-  questions.push[
+        var questions=[
+          {
+  Topic:"HTML",
+  question:"What does the abbreviation HTML stand for?",
+  opt1:"A. HyperText Markup Language",
+  opt2:"B. HighText Markup Language",
+  opt3:"C. HyperText Markdown Language",
+  opt4:"D. None",
+  answer:"A. HyperText Markup Language"
+},
 {
-  Topic:topic,
-                  
-                  question:"<%=question[i].question%>",
-                  answer:"<%=question[i].answer%>",
-                  options:[
-                  "<%=question.opt1%>",
-                      "<%=question.opt2%>",
-                      "<%=question.opt3%>",
-                      "<%=question.opt4%>",
-                  ]
+  Topic:"CSS",
+  question:"How many sizes of headers are available in HTML by default?",
+  opt1:"A. 5",
+  opt2:"B. 1",
+  opt3:"C. 3",
+  opt4:"D. 6",
+  answer:"D. 6"
+},
+{
+  Topic: "CSS",
+  question: "The full form of CSS is ?",
+  opt1: "A. Cascading Style Sheets",
+  opt2: "B. Coloured Special Sheets",
+  opt3: "C. Colour and style sheets",
+  opt4: "D. None Of the Above",
+  answer: "A. Cascading Style Sheets"
+
+},
+{
+   Topic: "CSS",
+   question: "In how many ways can CSS be written in ?",
+   opt1: "A. 1",
+   opt2: "B. 2",
+   opt3: "C. 3",
+   opt4: "D. 4",
+   answer: "C. 3"
+
+},
+{
+    Topic: "CSS",
+    quesiton: "Which HTML tag is used to describe internal CSS",
+    opt1: "A. <style>",
+    opt2: "B. <link>",
+    opt3: "C. <script>",
+    opt4: "D. None of the Above ",
+    answer: "A. <style>"
+},
+{
+   Topic: "CSS",
+   question: "Which of the following are valid ways to represent a colour in CSS ?",
+   opt1: "A. A valide colour name",
+   opt2: "B. RGB values",
+   opt3: "C. HEX vaues",
+   opt4: "D. All of the above",
+   answer: "D. All of the above"
+
+},
+{
+   Topic: "CSS",
+   question: "What will be the width of the div element given below?",
+  opt1: "A. 310px",
+  opt2: "B. 350px",
+  opt3:"C. 360px",
+  opt4: "D. 335px ",
+  answer: "C. 360px"
+
+},
+{
+ Topic: "Node.js",
+ question: "_________ is a interactive shell that processes Node",
+ opt1: "A. REAL",
+ opt2: "B. REPL",
+ opt3: "C. RESP",
+ opt4: "D. None of the Above",
+ answer: "D. None of the Above"
+
+},
+{
+Topic: "Node.js",
+ question: "Node.js is written in which language ?",
+ opt1: "A. C++",
+ opt2: "B. Python",
+ opt3: "C. Javascript",
+ opt4: "D. Java",
+ answer: "C. Javascript"
+
+},
+
+{
+   Topic: "Node.js",
+ question: "Which of the following are examples of node modules ?",
+ opt1: "A. Express",
+ opt2: "B. Bodey-Parser",
+ opt3: "C. Socket.io",
+ opt4: "D. All of the Above",
+ answer: "D. All of the Aboce"
+},
+{
+   Topic: "Node.js",
+ question: "We can kill a process in Node.js using the keyboard shortcut ?",
+ opt1: "A. Ctrl + C",
+ opt2: "B. Ctrcl + B",
+ opt3: "C. Ctrl + K",
+ opt4: "D. Shift + C",
+ answer: "A. Ctrl + C"
+},
+{
+Topic: "Node.js",
+ question: "What is the full form of npm ?",
+ opt1: "A. Node Project Manager",
+ opt2: "B. Node Package  Module",
+ opt3: "C. New Project Manager",
+ opt4: "D. Node Package Manager",
+ answer: "D. Node Package Manager"
+
+},
+{
+   Topic: "Javascript",
+   question: "What will be the output of the following code snippet ?",
+ opt1: "A. 3",
+ opt2: "B. 5",
+ opt3: "C. 0",
+ opt4: "D. 1",
+ answer: "B. 5"
+
+},
+{
+   Topic: "Javascript",
+   question: "What will be the output of the following code snippet ?",
+ opt1: "A. 3,4",
+ opt2: "B. 3,4,5",
+ opt3: "C. 2,3,4",
+ opt4: "D. 2,3",
+ answer: "A. 3,4"
+
+},
+{
+   Topic: "Javascript",
+   question: "Which of the following is not a Javascript framework?",
+
+ opt1: "A. Node",
+ opt2: "B. React",
+ opt3: "C. Cassandra",
+ opt4: "D. Vue",
+ answer: "C. Cassandra "
+
+},
+{
+   Topic: "Javascript",
+   question: " How do we write a comment in javascript ? ",
+
+ opt1: "A. //",
+ opt2: "B. /* */",
+ opt3: "C. #",
+ opt4: "D. $$",
+ answer: "A. //"
+
+},
+{
+   Topic: "Javascript",
+   question: " Which of the following keywords is used to define a variable in Javascript?",
+
+ opt1: "A. var",
+ opt2: "B. let",
+ opt3: "C. None",
+ opt4: "D. Both (A) and (B)",
+ answer: "D. Both (A) and (B)"
+},
+
+
+{
+ Topic: "HTML",
+ question: " Which attribute is used to provide a unique name to an HTML element ?",
+ opt1: "A. id",
+ opt2: "B. class",
+ opt3: "C. type",
+ opt4: "D. div",
+ answer: "A. id"
+
+
+},
+{
+ Topic: "HTML",
+ question: " What is the correct syntax to write an HTML comment ?",
+ opt1: "A. #comment",
+ opt2: "B. // comment",
+ opt3: "C. /* comment  */ ",
+ opt4: "D. <-- comment --> ",
+ answer: "D.  <-- comment --> "
+
+
+},
+{
+ Topic: "HTML",
+ question: "  How is black color represented in terms of RGB values ?",
+
+ opt1: "A. RGB (100,100,100)",
+ opt2: "B. RGB(0,0,0)",
+ opt3: "C. RGB(100,100,0) ",
+ opt4: "D. RGB(0,100,100) ",
+ answer: "B. RGB(0,0,0)"
+
+
 }
- 
-]
- }
-  
-  var count=1;
+        ]
+          var count=1;
           var quesnumb=1;
           var score=0;
           function showques(index){
             const questext=document.querySelector('.mcq1');
-            questext.textContent=schema.find().questions[index].question;
-            var opttag=`<label for="html" class="opt">${schema.find().questions[index].opt0}</label><br>
-                       <label for="html" class="opt">${schema.find().questions[index].opt1}</label><br>
-                       <label for="html" class="opt">${schema.find().questions[index].opt2}</label><br>
-                       <label for="html" class="opt">${schema.find().questions[index].opt3}</label><br>`;
+            questext.textContent= questions[index].question;
+            var opttag=`<label for="html" class="opt">${questions[index].opt1}</label><br>
+                       <label for="html" class="opt">${questions[index].opt2}</label><br>
+                       <label for="html" class="opt">${questions[index].opt3}</label><br>
+                       <label for="html" class="opt">${questions[index].opt4}</label><br>`;
             opt1.innerHTML=opttag;
             const opt=document.querySelectorAll(".opt");
             for(var i=0;i<opt.length;i++){
@@ -327,8 +504,9 @@ for(let problem of problems){
           const opt1=document.querySelector('.opt1');
           const nextbtn=document.querySelector('.b');
           showques(0);
+          quescounter(1);
           nextbtn.onclick=()=>{
-            // count++;
+            //count++;
             if(count<questions.length){
             showques(count);
             count++;
@@ -354,6 +532,7 @@ for(let problem of problems){
               const progressvalue=document.querySelector('.progress-value');
               var  progressstartvalue=-1;
               var progressendvalue=(score/questions.length)*100;
+              Math.round(progressendvalue);
               var speed=20;
 
               var progress = setInterval(() => {
@@ -371,6 +550,3 @@ for(let problem of problems){
         </script>
     </body>
 </html>
-
-
-          
