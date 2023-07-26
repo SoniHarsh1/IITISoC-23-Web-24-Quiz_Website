@@ -15,21 +15,21 @@ Responsive Design: The website is responsive and adapts to various screen sizes 
 
 ## Technologies Used
 
-HTML: The backbone of web development, HTML (Hypertext Markup Language) is used to structure and present content on web pages.
+### HTML: The backbone of web development, HTML (Hypertext Markup Language) is used to structure and present content on web pages.
 
-EJS (Embedded JavaScript): A templating engine that simplifies dynamic content rendering, allowing seamless integration of JavaScript code within HTML templates.
+### EJS (Embedded JavaScript): A templating engine that simplifies dynamic content rendering, allowing seamless integration of JavaScript code within HTML templates.
 
-CSS: Cascading Style Sheets define the visual layout and appearance of HTML elements, enabling eye-catching and responsive designs.
+### CSS: Cascading Style Sheets define the visual layout and appearance of HTML elements, enabling eye-catching and responsive designs.
 
-JavaScript: As a versatile scripting language, JavaScript powers interactivity on the website, enabling dynamic behavior and user engagement.
+### JavaScript: As a versatile scripting language, JavaScript powers interactivity on the website, enabling dynamic behavior and user engagement.
 
-Node.js: A server-side JavaScript runtime, Node.js facilitates the development of fast and scalable web applications, leveraging the same language on both client and server sides.
+### Node.js: A server-side JavaScript runtime, Node.js facilitates the development of fast and scalable web applications, leveraging the same language on both client and server sides.
 
-Passport: A powerful authentication middleware for Node.js, Passport streamlines the process of user authentication and ensures secure access to the application.
+### Passport: A powerful authentication middleware for Node.js, Passport streamlines the process of user authentication and ensures secure access to the application.
 
-MongoDB: A flexible NoSQL database, MongoDB stores data in JSON-like format, making it ideal for managing dynamic and unstructured data in a scalable manner.
+### MongoDB: A flexible NoSQL database, MongoDB stores data in JSON-like format, making it ideal for managing dynamic and unstructured data in a scalable manner.
 
-Express.js: A minimalist and robust Node.js framework, Express.js simplifies the creation of server-side applications, handling routing and middleware efficiently.
+### Express.js: A minimalist and robust Node.js framework, Express.js simplifies the creation of server-side applications, handling routing and middleware efficiently.
 
 ## How to run on localhost?
 
@@ -40,5 +40,7 @@ Install all the dependencies for this project by running the following command i
 
 Run the following command in the terminal to start the server.
 “node soc.js”
+
+Note: User can only login through their college email id 
 
 Open http://localhost:3000/ in the browser.
